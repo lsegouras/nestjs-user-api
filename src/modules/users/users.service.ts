@@ -11,6 +11,7 @@ export class UsersService {
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
 	) {}
+	private readonly users = [];
 
 	async createUsers(createUserDto: CreateUserDto): Promise<User> {
 		return await this.userRepository.save(createUserDto);
@@ -36,5 +37,9 @@ export class UsersService {
 
 	async removeUser(id: string): Promise<void> {
 		await this.userRepository.delete(id);
+	}
+
+	async findOneByEmail(email: string): Promise<User> {
+		return this.users.find((user) => user.email === email);
 	}
 }
